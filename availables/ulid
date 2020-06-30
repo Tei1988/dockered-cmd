@@ -3,4 +3,4 @@
 . $(dirname $(readlink $0))/../libs/user_option.sh
 
 DOCKER_IMAGE=tei1988/ulid:latest
-docker run ${USER_OPTION} --rm ${DOCKER_IMAGE} $@
+docker run ${USER_OPTION} --rm ${DOCKER_IMAGE} "$@"
