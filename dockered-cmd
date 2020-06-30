@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-cd $(dirname $0)
+cd "$(dirname "${0}")"
 
 SUBCMD="$1"
 TARGET="$2"
@@ -9,15 +9,15 @@ DEST_BIN="/usr/local/bin"
 
 case ${SUBCMD} in
     enable)
-        if [ -e ${AVAILABLE_BINS}/${TARGET} ]; then
-            ln -s ${AVAILABLE_BINS}/${TARGET} ${DEST_BIN}/${TARGET}
+        if [ -e "${AVAILABLE_BINS}/${TARGET}" ]; then
+            ln -s "${AVAILABLE_BINS}/${TARGET}" "${DEST_BIN}/${TARGET}"
         else
             echo "No such command found in availables."
         fi
     ;;
     disable)
-        if [ -e ${AVAILABLE_BINS}/${TARGET} ]; then
-            rm ${DEST_BIN}/${TARGET}
+        if [ -e "${AVAILABLE_BINS}/${TARGET}" ]; then
+            rm "${DEST_BIN}/${TARGET}"
         else
             echo "No such command found in availables."
         fi

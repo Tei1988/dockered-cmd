@@ -1,12 +1,20 @@
-suser_option() {
+#!/bin/sh -e
+
+user_option() {
     case $(uname) in
         Darwin)
-            USER_OPTION=""
+            printf '%s' ''
         ;;
         Linux)
-            USER_OPTION="-u $(id -u):$(cat /etc/group | grep docker | awk -F ':' '{print \$3}')"
+            case $0 in
+                docker)
+                    printf '%s' "-u $(id -u):$(grep docker < /etc/group | cut -d : -f 3)"
+                ;;
+                *)
+                    printf '%s' "-u $(id -u):$(id -g)"
+            esac
         ;;
         *)
-            echo "Unsupported OS."
+            return 255
     esac
 }
