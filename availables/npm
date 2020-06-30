@@ -1,0 +1,6 @@
+#!/bin/sh -e
+
+. $(dirname $(readlink $0))/../libs/user_option.sh
+
+DOCKER_IMAGE=circleci/node:12.18.2-buster
+docker run -it ${USER_OPTION} -v ${HOME}/.npmrc:/home/node/.npmrc:rw -v ${HOME}/.npm:/home/node/.npm:rw --entrypoint npm -w /src -v ${PWD}:/src --rm ${DOCKER_IMAGE} "$@"
