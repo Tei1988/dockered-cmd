@@ -1,0 +1,7 @@
+#!/bin/sh -e
+
+. "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
+USER_OPTION=$(user_option)
+
+DOCKER_IMAGE="tei1988/poppler-utils:0.88.0-alpine"
+docker run -it ${USER_OPTION} --entrypoint pdfunite -w /src -v "${PWD}:/src" --rm "${DOCKER_IMAGE}" "$@"
