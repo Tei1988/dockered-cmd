@@ -6,7 +6,7 @@ user_option() {
             printf '%s' ''
         ;;
         Linux)
-            case $0 in
+            case $1 in
                 docker)
                     printf '%s' "-u $(id -u):$(grep docker < /etc/group | cut -d : -f 3)"
                 ;;
