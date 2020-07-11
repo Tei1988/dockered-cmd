@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+. "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
+USER_OPTION=$(user_option docker)
+echo ${USER_OPTION}
+
+if [ ! -d "${HOME}/.config/gcloud" ]; then
+    mkdir -p "${HOME}/.config/gcloud"
+fi
+if [ ! -d "${HOME}/.docker" ]; then
+    mkdir -p "${HOME}/.docker"
+fi
+
+DOCKER_IMAGE="tei1988/cloud-build-local:0.5.0-alpine"
+docker run -it ${USER_OPTION} -w "/${PWD}" -v "${PWD}:/${PWD}" -v "${HOME}/.docker:/.docker:rw" -v "${HOME}/.config/gcloud:/.config/gcloud:rw" -v /var/run/docker.sock:/var/run/docker.sock --rm "${DOCKER_IMAGE}" "$@"
