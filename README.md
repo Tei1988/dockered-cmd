@@ -21,7 +21,7 @@ If you disable command, the symbolic link is removed.
 ## Available commans
 
 |command|version|repository|tag|
-|---|---|---||
+|---|---|---|---|
 |cloud-build-local|0.5.0|[docker.io/tei1988/cloud-build-local](https://hub.docker.com/r/tei1988/cloud-build-local)|0.5.0-alpine|
 |docker-compose|1.26.1|[docker.io/docker/compose](https://hub.docker.com/r/docker/compose)|1.26.1|
 |gcloud|300.0.0|[docker.io/tei1988/cloud-build-local](https://hub.docker.com/r/tei1988/cloud-build-local)|0.5.0-alpine|
