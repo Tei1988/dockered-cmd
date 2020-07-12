@@ -4,7 +4,7 @@ This repository is for scripts which realizes container as a command.
 
 ## Usage
 
-Supported commands are in "available" dir.
+Supported commands are in "availables" dir.
 
 To enable command, hit below:
 
