@@ -3,5 +3,12 @@
 . "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
 USER_OPTION=$(user_option)
 
+if [ ! -f "${HOME}/.gitconfig" ]; then
+    touch "${HOME}/.gitconfig"
+fi
+if [ ! -d "${HOME}/.ssh" ]; then
+    mkdir -p "${HOME}/.ssh"
+fi
+
 DOCKER_IMAGE="alpine/git:v2.26.2"
 docker run -it ${USER_OPTION} -w /src -v "${PWD}:/src" -v "${HOME}/.gitconfig:/.gitconfig:rw" -v "${HOME}/.ssh:/.ssh:ro" --rm "${DOCKER_IMAGE}" "$@"
