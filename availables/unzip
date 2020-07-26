@@ -1,0 +1,7 @@
+#!/bin/sh -e
+
+. "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
+USER_OPTION=$(user_option)
+
+DOCKER_IMAGE="kubeless/unzip:latest"
+docker run ${USER_OPTION} --entrypoint unzip -w /src -v "${PWD}:/src" --rm "${DOCKER_IMAGE}" "$@"
