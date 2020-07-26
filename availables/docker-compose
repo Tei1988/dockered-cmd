@@ -3,5 +3,5 @@
 . "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
 USER_OPTION=$(user_option docker)
 
-DOCKER_IMAGE="docker/compose:alpine-1.26.1"
+DOCKER_IMAGE="docker/compose:alpine-1.26.2"
 docker run -it ${USER_OPTION} -w "/${PWD}" -v "${PWD}:/${PWD}" -v /var/run/docker.sock:/var/run/docker.sock --rm "${DOCKER_IMAGE}" "$@"
