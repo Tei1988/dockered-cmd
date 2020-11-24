@@ -7,11 +7,13 @@ TERRAFORM_MOUNT_POINT=$(realpath "${TERRAFORM_BASE_DIR:-./}")
 TERRAFORM_WORKDIR=$(realpath --relative-to=${TERRAFORM_MOUNT_POINT} ${PWD})
 
 . "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
-USER_OPTION=$(user_option)
+USER_OPTION=$(user_option nobody)
 
 if [ ! -d "${HOME}/.config/gcloud" ]; then
     mkdir -p "${HOME}/.config/gcloud"
 fi
-
-DOCKER_IMAGE="hashicorp/terraform:0.12.28"
-docker run ${USER_OPTION} -w "/src/${TERRAFORM_WORKDIR}" -v "${TERRAFORM_MOUNT_POINT}:/src" -v "${HOME}/.config/gcloud:/.config/gcloud:ro" --rm "${DOCKER_IMAGE}" "$@"
+if [ ! -d "${HOME}/.aws" ]; then
+    mkdir -p "${HOME}/.aws"
+fi
+DOCKER_IMAGE=${DOCKER_IMAGE:-"hashicorp/terraform:0.13.4"}
+docker run -it ${USER_OPTION} -e TF_LOG=debug -v "${HOME}/.cache/helm/repository/:/.cache/helm/repository/:rw" -w "/src/${TERRAFORM_WORKDIR}" -v "${TERRAFORM_MOUNT_POINT}:/src" -v "${HOME}/.config/gcloud:/.config/gcloud:ro" -v "${HOME}/.aws:/.aws:ro" -v "${HOME}/.kube:/.kube:ro" --rm "${DOCKER_IMAGE}" "$@"

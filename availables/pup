@@ -1,0 +1,7 @@
+#!/bin/sh -e
+
+. "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
+USER_OPTION=$(user_option)
+
+DOCKER_IMAGE="tei1988/pup:0.4.0-alpine"
+docker run ${USER_OPTION} -w /src -v "${PWD}:/src" --rm "${DOCKER_IMAGE}" "$@"

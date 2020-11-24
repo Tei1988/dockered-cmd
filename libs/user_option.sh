@@ -3,7 +3,13 @@
 user_option() {
     case $(uname) in
         Darwin)
-            printf '%s' ''
+            case $1 in
+                nobody)
+                    printf '%s' "-u 65534:65534"
+                ;;
+                *)
+                ;;
+            esac
         ;;
         Linux)
             case $1 in
