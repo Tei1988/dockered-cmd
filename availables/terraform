@@ -1,8 +1,7 @@
 #!/bin/sh -e
 
-if [ "x${TERRAFORM_BASE_DIR}" = 'x' ]; then
-    echo "try to define TERRAFORM_BASE_DIR as environment variable if error occured on module loading."
-fi
+TERRAFORM_BASE_DIR_AUTO=$(cat **.tf | pcre2grep -r -N ANYCRLF -M -e 'source *= *"((?=[^"]+)[./]+).*"' --only-matching=1 | uniq)
+TERRAFORM_BASE_DIR=${TERRAFORM_BASE_DIR:-${TERRAFORM_BASE_DIR_AUTO}}
 TERRAFORM_MOUNT_POINT=$(realpath "${TERRAFORM_BASE_DIR:-./}")
 TERRAFORM_WORKDIR=$(realpath --relative-to=${TERRAFORM_MOUNT_POINT} ${PWD})
 
@@ -15,5 +14,7 @@ fi
 if [ ! -d "${HOME}/.aws" ]; then
     mkdir -p "${HOME}/.aws"
 fi
-DOCKER_IMAGE=${DOCKER_IMAGE:-"hashicorp/terraform:0.13.4"}
-docker run -it ${USER_OPTION} -e TF_LOG=debug -v "${HOME}/.cache/helm/repository/:/.cache/helm/repository/:rw" -w "/src/${TERRAFORM_WORKDIR}" -v "${TERRAFORM_MOUNT_POINT}:/src" -v "${HOME}/.config/gcloud:/.config/gcloud:ro" -v "${HOME}/.aws:/.aws:ro" -v "${HOME}/.kube:/.kube:ro" --rm "${DOCKER_IMAGE}" "$@"
+
+TERRAFORM_VERSION=${TERRAFORM_VERSION:-$(cat .terraform-version)}
+DOCKER_IMAGE=${DOCKER_IMAGE:-"hashicorp/terraform:${TERRAFORM_VERSION}"}
+docker run -it ${USER_OPTION} -v "${HOME}/.cache/helm/repository/:/.cache/helm/repository/:rw" -w "/src/${TERRAFORM_WORKDIR}" -v "${TERRAFORM_MOUNT_POINT}:/src" -v "${HOME}/.config/gcloud:/.config/gcloud:ro" -v "${HOME}/.aws:/.aws:ro" -v "${HOME}/.kube:/.kube:ro" --rm "${DOCKER_IMAGE}" "$@"
