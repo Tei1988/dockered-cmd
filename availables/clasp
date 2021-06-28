@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+. "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
+USER_OPTION=$(user_option)
+
+if [ ! -f "${HOME}/.clasprc.json" ]; then
+    touch "${HOME}/.clasprc.json"
+fi
+
+DOCKER_IMAGE="tei1988/clasp:2.3.0-alpine"
+docker run -it ${USER_OPTION} -w /src -v "${PWD}:/src" -v "${HOME}/.clasprc.json:/root/.clasprc.json:rw" --rm "${DOCKER_IMAGE}" "$@"
