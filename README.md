@@ -23,7 +23,7 @@ If you disable command, the symbolic link is removed.
 |command|version|repository|tag|
 |---|---|---|---|
 |cloud-build-local|0.5.0|[docker.io/tei1988/cloud-build-local](https://hub.docker.com/r/tei1988/cloud-build-local)|0.5.0-alpine|
-|docker-compose|1.26.2|[docker.io/docker/compose](https://hub.docker.com/r/docker/compose)|1.26.2|
+|docker-compose|1.29.2|[docker.io/docker/compose](https://hub.docker.com/r/docker/compose)|1.29.2|
 |gcloud|300.0.0|[docker.io/tei1988/cloud-build-local](https://hub.docker.com/r/tei1988/cloud-build-local)|0.5.0-alpine|
 |tbx|89.8.931|[docker.io/tei1988/tbx](https://hub.docker.com/r/tei1988/tbx)|89.8.931-alpine|
 |go|1.14.4|[docker.io/library/golang](https://hub.docker.com/_/golang)|1.14.4-buster|
