@@ -8,13 +8,13 @@ Supported commands are in "availables" dir.
 
 To enable command, hit below:
 
-`sudo ./dockered-cmd enable <command>`
+`sudo ./dockered-cmd enable <command> <alias:optional>`
 
 If you enable command, the symbolic link to the enabled command is created in /usr/local/bin.
 
 To disable command, hit below:
 
-`sudo ./dockered-cmd disable <command>`
+`sudo ./dockered-cmd disable <command> <alias:optional>`
 
 If you disable command, the symbolic link is removed.
 
