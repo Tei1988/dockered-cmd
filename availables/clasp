@@ -2,10 +2,12 @@
 
 . "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
 USER_OPTION=$(user_option)
+#ARCH_OPTION=$(arch_option)
+TTY_OPTION=$(tty_option)
 
 if [ ! -f "${HOME}/.clasprc.json" ]; then
     touch "${HOME}/.clasprc.json"
 fi
 
-DOCKER_IMAGE="tei1988/clasp:2.3.0-alpine"
-docker run -it ${USER_OPTION} -w /src -v "${PWD}:/src" -v "${HOME}/.clasprc.json:/root/.clasprc.json:rw" --rm "${DOCKER_IMAGE}" "$@"
+DOCKER_IMAGE="tei1988/clasp:2.4.2-alpine"
+docker run -e clasp_config_project=${clasp_config_project} ${ARCH_OPTION} -i ${TTY_OPTION} ${USER_OPTION} -w "${PWD}" -v "${PWD}:${PWD}" -v "${HOME}/.clasprc.json:/.clasprc.json:rw" --rm "${DOCKER_IMAGE}" "$@"
