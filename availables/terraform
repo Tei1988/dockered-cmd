@@ -7,6 +7,8 @@ TERRAFORM_WORKDIR=$(realpath --relative-to=${TERRAFORM_MOUNT_POINT} ${PWD})
 
 . "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
 USER_OPTION=$(user_option nobody)
+#ARCH_OPTION=$(arch_option)
+TTY_OPTION=$(tty_option)
 
 if [ ! -d "${HOME}/.config/gcloud" ]; then
     mkdir -p "${HOME}/.config/gcloud"
@@ -17,4 +19,4 @@ fi
 
 TERRAFORM_VERSION=${TERRAFORM_VERSION:-$(cat .terraform-version)}
 DOCKER_IMAGE=${DOCKER_IMAGE:-"hashicorp/terraform:${TERRAFORM_VERSION}"}
-docker run -it ${USER_OPTION} -v "${HOME}/.cache/helm/repository/:/.cache/helm/repository/:rw" -w "/src/${TERRAFORM_WORKDIR}" -v "${TERRAFORM_MOUNT_POINT}:/src" -v "${HOME}/.config/gcloud:/.config/gcloud:ro" -v "${HOME}/.aws:/.aws:ro" -v "${HOME}/.kube:/.kube:ro" --rm "${DOCKER_IMAGE}" "$@"
+docker run -e AWS_PROFILE=${AWS_PROFILE} ${ARCH_OPTION} -i ${TTY_OPTION} ${USER_OPTION} -v "${HOME}/.terraform.d/:/.terraform.d/:rw" -v "${HOME}/.cache/helm/repository/:/.cache/helm/repository/:rw" -w "${PWD}/${TERRAFORM_WORKDIR}" -v "${TERRAFORM_MOUNT_POINT}:${PWD}" -v "${HOME}/.config/gcloud:/.config/gcloud:ro" -v "${HOME}/.aws:/.aws:ro" -v "${HOME}/.kube:/.kube:ro" --rm "${DOCKER_IMAGE}" "$@"
