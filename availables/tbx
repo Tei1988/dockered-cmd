@@ -2,10 +2,11 @@
 
 . "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
 USER_OPTION=$(user_option)
+ARCH_OPTION=$(arch_option)
 
 if [ ! -d "${HOME}/.toolbox" ]; then
     mkdir "${HOME}/.toolbox"
 fi
 
-DOCKER_IMAGE="tei1988/tbx:89.8.931-alpine"
-docker run -i ${USER_OPTION} -w /src -v "${PWD}:/src" -v "${HOME}/.toolbox:/root/.toolbox:rw" --rm "${DOCKER_IMAGE}" "$@"
+DOCKER_IMAGE="tei1988/tbx:99.8.1130-alpine"
+docker run ${ARCH_OPTION} -i ${USER_OPTION} -w /src -v "${PWD}:/src" -v "${HOME}/.toolbox:/root/.toolbox:rw" --rm "${DOCKER_IMAGE}" "$@"

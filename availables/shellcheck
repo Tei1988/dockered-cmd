@@ -2,6 +2,7 @@
 
 . "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
 USER_OPTION=$(user_option)
+ARCH_OPTION=$(arch_option)
 
 DOCKER_IMAGE="koalaman/shellcheck-alpine:v0.7.1"
-docker run -it ${USER_OPTION} --entrypoint shellcheck -w /src -v "${PWD}:/src" --rm "${DOCKER_IMAGE}" "$@"
+docker run ${ARCH_OPTION} ${ARCH_OPTION} -it ${USER_OPTION} --entrypoint shellcheck -w /src -v "${PWD}:/src" --rm "${DOCKER_IMAGE}" "$@"

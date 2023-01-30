@@ -2,10 +2,8 @@
 
 . "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
 USER_OPTION=$(user_option docker)
+ARCH_OPTION=$(arch_option)
 
-if [ ! -d "${HOME}/.config/gcloud" ]; then
-    mkdir -p "${HOME}/.config/gcloud"
-fi
 
 if [ ! -d "${HOME}/.docker" ]; then
     mkdir -p "${HOME}/.docker"
@@ -15,4 +13,4 @@ if [ ! -f "${HOME}/.actrc" ]; then
 fi
 
 DOCKER_IMAGE="tei1988/act:0.2.23-alpine"
-docker run -it ${USER_OPTION} -w "/${PWD}" -v "${PWD}:/${PWD}" -v "${HOME}/.docker:/root/.docker:rw" -v "${HOME}/.config/gcloud:/root/.config/gcloud:rw" -v "${HOME}/.actrc:/root/.actrc:rw" -v /var/run/docker.sock:/var/run/docker.sock --rm "${DOCKER_IMAGE}" "$@"
+docker run ${ARCH_OPTION} -it ${USER_OPTION} -w "/${PWD}" -v "${PWD}:/${PWD}" -v "${HOME}/.docker:/root/.docker:rw" -v "${HOME}/.actrc:/root/.actrc:rw" -v /var/run/docker.sock:/var/run/docker.sock --rm "${DOCKER_IMAGE}" "$@"

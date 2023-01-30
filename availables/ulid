@@ -2,6 +2,7 @@
 
 . "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
 USER_OPTION=$(user_option)
+ARCH_OPTION=$(arch_option)
 
 DOCKER_IMAGE="tei1988/ulid:2.0.2-alpine"
-docker run ${USER_OPTION} --rm "${DOCKER_IMAGE}" "$@"
+docker run ${ARCH_OPTION} ${USER_OPTION} --rm "${DOCKER_IMAGE}" "$@"

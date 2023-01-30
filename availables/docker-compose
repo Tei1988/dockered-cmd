@@ -2,6 +2,8 @@
 
 . "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
 USER_OPTION=$(user_option docker)
+ARCH_OPTION=$(arch_option)
+TTY_OPTION=$(tty_option)
 
 DOCKER_IMAGE="docker/compose:alpine-1.29.2"
-docker run -it ${USER_OPTION} -w "/${PWD}" -v "${PWD}:/${PWD}" -v /var/run/docker.sock:/var/run/docker.sock --rm "${DOCKER_IMAGE}" "$@"
+docker run ${ARCH_OPTION} -i ${TTY_OPTION} ${USER_OPTION} -w "${PWD}" -v "${PWD}:/${PWD}" -v /var/run/docker.sock:/var/run/docker.sock --rm "${DOCKER_IMAGE}" "$@"

@@ -2,7 +2,7 @@
 
 . "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
 USER_OPTION=$(user_option docker)
-echo ${USER_OPTION}
+ARCH_OPTION=$(arch_option)
 
 if [ ! -d "${HOME}/.config/gcloud" ]; then
     mkdir -p "${HOME}/.config/gcloud"
@@ -12,4 +12,4 @@ if [ ! -d "${HOME}/.docker" ]; then
 fi
 
 DOCKER_IMAGE="tei1988/cloud-build-local:0.5.2-alpine"
-docker run -it ${USER_OPTION} -w "/${PWD}" -v "${PWD}:/${PWD}" -v "${HOME}/.docker:/root/.docker:rw" -v "${HOME}/.config/gcloud:/root/.config/gcloud:rw" -v /var/run/docker.sock:/var/run/docker.sock --rm "${DOCKER_IMAGE}" "$@"
+docker run ${ARCH_OPTION} -it ${USER_OPTION} -w "/${PWD}" -v "${PWD}:/${PWD}" -v "${HOME}/.docker:/root/.docker:rw" -v "${HOME}/.config/gcloud:/root/.config/gcloud:rw" -v /var/run/docker.sock:/var/run/docker.sock --rm "${DOCKER_IMAGE}" "$@"
