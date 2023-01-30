@@ -4,20 +4,21 @@ cd "$(dirname "${0}")"
 
 SUBCMD="$1"
 TARGET="$2"
+NAME_AS="${3:-$2}"
 AVAILABLE_BINS="${PWD}/availables"
 DEST_BIN="/usr/local/bin"
 
 case ${SUBCMD} in
     enable)
         if [ -e "${AVAILABLE_BINS}/${TARGET}" ]; then
-            ln -s "${AVAILABLE_BINS}/${TARGET}" "${DEST_BIN}/${TARGET}"
+            ln -s "${AVAILABLE_BINS}/${TARGET}" "${DEST_BIN}/${NAME_AS}"
         else
             echo "No such command found in availables."
         fi
     ;;
     disable)
-        if [ -e "${AVAILABLE_BINS}/${TARGET}" ]; then
-            rm "${DEST_BIN}/${TARGET}"
+        if [ -e "${DEST_BIN}/${NAME_AS}" -a "${AVAILABLE_BINS}/${TARGET}" ]; then
+            rm "${DEST_BIN}/${NAME_AS}"
         else
             echo "No such command found in availables."
         fi

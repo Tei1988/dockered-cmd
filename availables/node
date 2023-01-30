@@ -1,7 +1,19 @@
 #!/bin/sh -e
 
 . "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
+CMD=$(basename $0)
 USER_OPTION=$(user_option)
 
-DOCKER_IMAGE="circleci/node:12.18.2-buster"
-docker run -it ${USER_OPTION} --entrypoint node -w /src -v "${PWD}:/src" --rm "${DOCKER_IMAGE}" "$@"
+if [ ! -f "${HOME}/.npmrc" ]; then
+    touch "${HOME}/.npmrc"
+fi
+if [ ! -d "${HOME}/.npm" ]; then
+    mkdir -p "${HOME}/.npm"
+fi
+if [ -f .node_version ]; then
+    NODE_VERSION=$(cat .node_version)
+fi
+PORT_OPTION=${PORT_OPTION:-}
+NODE_VERSION=${NODE_VERSION:-16.15.1}
+DOCKER_IMAGE="tei1988/node:${NODE_VERSION}-alpine"
+docker run -it ${USER_OPTION} ${PORT_OPTION} -v "${HOME}/.npmrc:/home/node/.npmrc:rw" -v "${HOME}/.npm:/home/node/.npm:rw" --entrypoint ${CMD} -w /src -v "${PWD}:/src" --rm "${DOCKER_IMAGE}" "$@"
