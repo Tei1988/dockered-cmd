@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+. "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
+USER_OPTION=$(user_option)
+#ARCH_OPTION=$(arch_option)
+
+RUBY_VERSION=${RUBY_VERSION:-$(cat .ruby-version)}
+DOCKER_IMAGE="tei1988/ruby:${RUBY_VERSION}-alpine"
+docker run -e BUNDLE_PATH=vendor/bundle ${ARCH_OPTION} -it ${USER_OPTION} --entrypoint bundle -w /src -v "${PWD}:/src" --rm "${DOCKER_IMAGE}" "$@"
