@@ -1,7 +1,8 @@
 #!/bin/sh -e
 
 . "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
-USER_OPTION=$(user_option docker)
+CMD=$(basename $0)
+USER_OPTION=$(user_option)
 ARCH_OPTION=$(arch_option)
 TTY_OPTION=$(tty_option)
 
@@ -15,5 +16,5 @@ if [ ! -d "${HOME}/.kube" ]; then
     mkdir -p "${HOME}/.kube"
 fi
 
-DOCKER_IMAGE="google/cloud-sdk:415.0.0-slim"
-docker run ${ARCH_OPTION} -i ${TTY_OPTION} ${USER_OPTION} --entrypoint gcloud -w "${PWD}" -v "${PWD}:${PWD}:rw" -v "${HOME}/.docker:/.docker:rw" -v "${HOME}/.kube:/.kube:rw" -v "${HOME}/.config/gcloud:/.config/gcloud:rw" --rm "${DOCKER_IMAGE}" "$@"
+DOCKER_IMAGE="tei1988/gcloud:425.0.0"
+docker run ${ARCH_OPTION} -i ${TTY_OPTION} ${USER_OPTION} --entrypoint ${CMD} -w "${PWD}" -v "${PWD}:${PWD}:rw" -v "${HOME}/.docker:/.docker:rw" -v "${HOME}/.kube:/.kube:rw" -v "${HOME}/.config/gcloud:/.config/gcloud:rw" --rm "${DOCKER_IMAGE}" "$@"

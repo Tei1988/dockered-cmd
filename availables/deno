@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+. "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
+USER_OPTION=$(user_option)
+#ARCH_OPTION=$(arch_option)
+
+DENO_VERSION=${DENO_VERSION:-$(cat .deno-version)}
+DOCKER_IMAGE="denoland/deno:alpine-${DENO_VERSION#v}"
+docker run ${ARCH_OPTION} -i ${USER_OPTION} -w /src -v "${PWD}:/src" -v "${HOME}/deno-dir:/deno-dir" --rm "${DOCKER_IMAGE}" "$@"

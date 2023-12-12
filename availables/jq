@@ -5,5 +5,5 @@ USER_OPTION=$(user_option)
 ARCH_OPTION=$(arch_option)
 TTY_OPTION=$(tty_option)
 
-DOCKER_IMAGE="tei1988/ulid:2.0.2-alpine"
+DOCKER_IMAGE="tei1988/jq:1.6-alpine"
 docker run ${ARCH_OPTION} -i ${TTY_OPTION} ${USER_OPTION} --rm "${DOCKER_IMAGE}" "$@"

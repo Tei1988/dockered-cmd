@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+. "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
+USER_OPTION=$(user_option)
+#ARCH_OPTION=$(arch_option)
+
+RUBY_VERSION=${PYTHON_VERSION:-$(cat .python-version)}
+DOCKER_IMAGE="python:${PYTHON_VERSION#^v}-alpine"
+docker run ${ARCH_OPTION} -it ${USER_OPTION} --entrypoint python -w /src -v "${PWD}:/src" --rm "${DOCKER_IMAGE}" "$@"

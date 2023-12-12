@@ -12,7 +12,11 @@ fi
 if [ ! -d "${HOME}/.npm" ]; then
     mkdir -p "${HOME}/.npm"
 fi
+if [ ! -d "${HOME}/.config/gcloud" ]; then
+    mkdir -p "${HOME}/.config/gcloud"
+fi
+
 PORT_OPTION=${PORT_OPTION:-}
 NODE_VERSION=${NODE_VERSION:-$(cat .node-version)}
-DOCKER_IMAGE="tei1988/node:${NODE_VERSION}-alpine"
-docker run ${ARCH_OPTION} -i ${TTY_OPTION} ${USER_OPTION} -v "${HOME}/.npmrc:/.npmrc:rw" -v "${HOME}/.npm:/.npm:rw" --entrypoint ${CMD} -w "${PWD}" -v "${PWD}:${PWD}:rw" --rm "${DOCKER_IMAGE}" "$@"
+DOCKER_IMAGE="tei1988/node:${NODE_VERSION#v}-alpine"
+docker run ${PORT_OPTION} ${ARCH_OPTION} -e NODE_ENV -i ${TTY_OPTION} ${USER_OPTION} -v "${HOME}/.npmrc:/.npmrc:rw" -v "${HOME}/.npm:/.npm:rw" -v "${HOME}/.config/gcloud:/.config/gcloud:ro" --entrypoint ${CMD} -w "${PWD}" -v "${PWD}:${PWD}:rw" --rm "${DOCKER_IMAGE}" "$@"

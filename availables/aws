@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+. "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
+USER_OPTION=$(user_option nobody)
+#ARCH_OPTION=$(arch_option)
+
+if [ ! -d "${HOME}/.aws" ]; then
+    mkdir -p "${HOME}/.aws"
+fi
+
+AWSCLI_VERSION=${AWSCLI_VERSION:-2.2.16}
+DOCKER_IMAGE=${DOCKER_IMAGE:-"amazon/aws-cli:${AWSCLI_VERSION}"}
+docker run -e AWS_PROFILE=${AWS_PROFILE} -it ${USER_OPTION} -v "${HOME}/.aws:/.aws:rw" --rm "${DOCKER_IMAGE}" "$@"
