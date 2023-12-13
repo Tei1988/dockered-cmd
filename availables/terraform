@@ -1,13 +1,13 @@
 #!/bin/sh -e
 
-TERRAFORM_BASE_DIR_AUTO=$(cat **.tf | pcre2grep -r -N ANYCRLF -M -e 'source *= *"((?=[^"]+)[./]+).*"' --only-matching=1 | uniq)
+TERRAFORM_BASE_DIR_AUTO=$(echo "$(cat **.tf | pcre2grep -r -N ANYCRLF -M -e 'source *= *"((?=[^"]+)[./]+).*"' --only-matching=1 | uniq)")
 TERRAFORM_BASE_DIR=${TERRAFORM_BASE_DIR:-${TERRAFORM_BASE_DIR_AUTO}}
-TERRAFORM_MOUNT_POINT=$(realpath "${TERRAFORM_BASE_DIR:-./}")
-TERRAFORM_WORKDIR=$(realpath --relative-to=${TERRAFORM_MOUNT_POINT} ${PWD})
+TERRAFORM_MOUNT_POINT=$(realpath -z "${TERRAFORM_BASE_DIR:-./}")
+TERRAFORM_WORKDIR=$(realpath -z --relative-to=${TERRAFORM_MOUNT_POINT} ${PWD})
 
 . "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
 USER_OPTION=$(user_option nobody)
-#ARCH_OPTION=$(arch_option)
+ARCH_OPTION=$(arch_option)
 TTY_OPTION=$(tty_option)
 
 if [ ! -d "${HOME}/.config/gcloud" ]; then

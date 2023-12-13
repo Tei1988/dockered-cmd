@@ -6,8 +6,8 @@ USER_OPTION=$(user_option)
 ARCH_OPTION=$(arch_option)
 TTY_OPTION=$(tty_option)
 
-DOCKER_IMAGE_NAME="tei1988/pcre2-tools"
-DOCKER_IMAGE_TAG="10.42-r2"
+DOCKER_IMAGE_NAME="tei1988/coreutils"
+DOCKER_IMAGE_TAG="9.4-r1"
 DOCKER_IMAGE="${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
 
-docker run ${ARCH_OPTION}  -i ${TTY_OPTION} ${USER_OPTION} --entrypoint ${CMD:-"pcre2grep"} --rm "${DOCKER_IMAGE}" "$@"
+docker run ${ARCH_OPTION}  -i ${TTY_OPTION} ${USER_OPTION} --entrypoint ${CMD} -w ${PWD} --rm "${DOCKER_IMAGE}" "$@"
