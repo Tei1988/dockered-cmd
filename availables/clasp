@@ -9,5 +9,5 @@ if [ ! -f "${HOME}/.clasprc.json" ]; then
     touch "${HOME}/.clasprc.json"
 fi
 
-DOCKER_IMAGE="tei1988/clasp:2.4.2-alpine"
-docker run -e clasp_config_project=${clasp_config_project} ${ARCH_OPTION} -i ${TTY_OPTION} ${USER_OPTION} -w "${PWD}" -v "${PWD}:${PWD}" -v "${HOME}/.clasprc.json:/.clasprc.json:rw" --rm "${DOCKER_IMAGE}" "$@"
+DOCKER_IMAGE="tei1988/clasp:2.4.2-1-alpine"
+docker run -e clasp_config_project=${clasp_config_project} -e CLASP_PORT=${CLASP_PORT:-8080} -p ${CLASP_PORT:-8080}:${CLASP_PORT:-8080} ${ARCH_OPTION} -i ${TTY_OPTION} ${USER_OPTION} -w "${PWD}" -v "${PWD}:${PWD}" -v "${HOME}/.clasprc.json:/.clasprc.json:rw" --rm "${DOCKER_IMAGE}" "$@"
