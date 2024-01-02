@@ -16,5 +16,5 @@ if [ ! -d "${HOME}/.kube" ]; then
     mkdir -p "${HOME}/.kube"
 fi
 
-DOCKER_IMAGE="tei1988/gcloud:425.0.0"
-docker run ${ARCH_OPTION} -i ${TTY_OPTION} ${USER_OPTION} --entrypoint ${CMD} -w "${PWD}" -v "${PWD}:${PWD}:rw" -v "${HOME}/.docker:/.docker:rw" -v "${HOME}/.kube:/.kube:rw" -v "${HOME}/.config/gcloud:/.config/gcloud:rw" --rm "${DOCKER_IMAGE}" "$@"
+DOCKER_IMAGE="google/cloud-sdk:458.0.1-alpine"
+docker run ${ARCH_OPTION} -i ${TTY_OPTION} ${USER_OPTION} --entrypoint ${CMD} -w "${PWD}" -v "${PWD}:${PWD}:rw" -v "${HOME}/.docker:/home/cloudsdk/.docker:rw" -v "${HOME}/.kube:/home/cloudsdk/.kube:rw" -v "${HOME}/.config/gcloud:/home/cloudsdk/.config/gcloud:rw" --rm "${DOCKER_IMAGE}" "$@"
