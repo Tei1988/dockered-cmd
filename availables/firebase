@@ -1,0 +1,12 @@
+#!/bin/sh -e
+
+. "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
+CMD=$(basename $0)
+USER_OPTION=$(user_option)
+
+if [ ! -d "${HOME}/.config/configstore" ]; then
+    mkdir -p "${HOME}/.config/configstore"
+fi
+
+DOCKER_IMAGE="andreysenov/firebase-tools:11.0.1-node-16-alpine"
+docker run -it ${USER_OPTION} -p 4000:4000 -p 5000:5000 -p 5001:5001 -p 8080:8080 -p 8085:8085 -p 9000:9000 -p 9005:9005 -p 9099:9099 -p 9199:9199 -v "${HOME}/.config/configstore:/home/node/.config/configstore:rw" --entrypoint ${CMD} -w /src -v "${PWD}:/src" --rm "${DOCKER_IMAGE}" "$@"
