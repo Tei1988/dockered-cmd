@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+. "$(dirname "$(readlink "$0")")/../libs/user_option.sh"
+# USER_OPTION=$(user_option) # この行を削除
+ARCH_OPTION=$(arch_option)
+TTY_OPTION=$(tty_option)
+
+# ユーザーが作成したpoetryイメージを使用
+DOCKER_IMAGE="tei1988/poetry:2.1.2-alpine"
+
+# コンテナ内でpoetryコマンドを実行
+# ${USER_OPTION} を削除
+docker run ${ARCH_OPTION} -i ${TTY_OPTION} --entrypoint poetry -w /src -v "${PWD}:/src" --rm "${DOCKER_IMAGE}" "$@"
